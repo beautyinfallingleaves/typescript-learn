@@ -1,30 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function greeter(person) {
-  return `hello ${person}`
-}
-
-let user = 'Anon User'
 
 const App: React.FC = () => {
+  class Student {
+    fullName: string
+    constructor(
+      public firstName: string,
+      public middleInitial: string,
+      public lastName: string
+    ) {
+      this.fullName = `${firstName} ${middleInitial} ${lastName}`
+    }
+  }
+
+  interface Person {
+    fullName: string
+  }
+
+  function greeter(person: Person) {
+    return `hello ${person.fullName}`
+  }
+
+  let user = new Student('Susan', 'B.', 'Anthony')
+
+  const [greeting, setGreeting] = useState('')
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>{greeting}</p>
+      <button onClick={() => setGreeting(greeter(user))}>Greet</button>
     </div>
   );
 }
